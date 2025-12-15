@@ -1,40 +1,44 @@
-# Fun Chat Cards 🎀 
-A playful, cherry-themed React + Vite web app powered by **Groq LLaMA-3.1** that generates fun, short AI-crafted social cards.  
-Lightweight, fast, and perfect as a demo project for internship applications.
+# Fun Chat Cards 🎀 [![Live Demo](https://img.shields.io/badge/Live-Demo-ff3563?style=for-the-badge)](https://fun-chat-cards.vercel.app/)
+
+or https://fun-chat-cards.vercel.app/
+
+
+A playful, cherry-themed React + Vite web app powered by **Groq LLaMA-3.1** that generates fun, short AI-crafted social cards. 
 
 ---
 
 ## Features ✨
 - ⚡ **Instant AI-generated chat cards**
-- 🍒 **Modern UI** 
-- 🤖 **Groq LLaMA-3.1 8B Instant** — totally free to use
-- 🎨 Clean & aesthetic layout perfect for screenshots
+- 🍒 **Modern UI**
+- 🌗 **Light & Dark modes**
+- 🔀 **Random topic generator**
+- 📸 **Save card as image (PNG)**
+- 🔗 **Share card on social platforms**
+- 🤖 **Groq LLaMA-3.1 8B Instant** (fast & free)
 - 🧠 Smart JSON-based generation for:
   - Title  
   - Emoji  
-  - Body text  
+  - Short body text  
   - Hashtags
-
+- 📱 **Screenshot-ready cards** (social media friendly)
 ---
 
 ## Preview
-<img width="975" height="508" alt="image" src="https://github.com/user-attachments/assets/f38bf42c-12f1-41dc-81b1-08b2ec69429f" />
-
+<img width="981" height="468" alt="image" src="https://github.com/user-attachments/assets/35d7e195-a651-46b2-bed5-544d6b915880" />
 
 ---
 
 ## Tech Stack
 - **React 18**
 - **Vite**
-- **Groq API**
+- **Groq API (LLaMA-3.1 8B Instant)**
 - **Axios**
-- **Modern CSS (custom styling)**
+- **Custom modern CSS** (no UI frameworks)
 
 ---
 
 ## 📂 Project Structure
-<img width="167" height="339" alt="image" src="https://github.com/user-attachments/assets/a0fd6792-6ab5-4144-bb0e-fb8975aea1ea" />
-
+<img width="154" height="377" alt="image" src="https://github.com/user-attachments/assets/7593eb6f-6ea3-43a0-aeba-a05537ca1749" />
 
 ---
 
@@ -78,17 +82,12 @@ The model returns a JSON object like:
 
 The UI turns it into a polished social card with emojis + hashtags.
 
-## 🛠 Future Enhancements
+## 🌍 Deployment
 
-- Save card as image (download PNG)
+🚀 Live Demo: https://fun-chat-cards.vercel.app/
 
-- Random topic generator
+This project is deployed for free using **Vercel**.
 
-- Theme toggle
-
-- Share card on socials
-
-- Vercel serverless API for secure key handling
 
 ## 🤝 Contributing
 
@@ -100,6 +99,7 @@ MIT License — free to use & modify.
 
 ## Author
 Sushmitha Thadi
+
 Fun mini-project built for learning & internship applications.
 
 
