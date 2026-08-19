@@ -35,7 +35,7 @@ A playful, cherry-themed React + Vite web app powered by **Groq API** that gener
 ---
 
 ## Preview
-<img width="981" height="468" alt="image" src="https://github.com/user-attachments/assets/35d7e195-a651-46b2-bed5-544d6b915880" />
+<img width="1227" height="885" alt="image" src="https://github.com/user-attachments/assets/87ccb883-d7b8-4291-8fd5-06db313974a6" />
 
 ---
 
