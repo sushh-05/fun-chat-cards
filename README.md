@@ -3,23 +3,34 @@
 or https://fun-chat-cards.vercel.app/
 
 
-A playful, cherry-themed React + Vite web app powered by **Groq LLaMA-3.1** that generates fun, short AI-crafted social cards. 
+A playful, cherry-themed React + Vite web app powered by **Groq API** that generates fun, short AI-crafted social cards. 
 
 ---
 
 ## Features ✨
 - ⚡ **Instant AI-generated chat cards**
-- 🍒 **Modern UI**
-- 🌗 **Light & Dark modes**
-- 🔀 **Random topic generator**
-- 📸 **Save card as image (PNG)**
+- 🍒 **Modern UI** 
+- 🌗 **Light & Dark modes** 
+- 🐦 **Animated Vanta.js Birds background**
+- 🎭 **Tone selector** (Playful, Sarcastic, Inspirational, Professional, Gen-Z)
+- 📐 **Format-aware layouts** (Auto, 1:1 Square, 4:5 Portrait, 16:9 Landscape)
+- 🔤 **Customizable card fonts** (Sans-serif, Serif, Monospace, Handwriting)
+- ✏️ **Editable card text** (click to edit title, body, or tags)
+- 🏷️ **Custom Handle/Watermark** support
+- 🎨 **AI-generated color themes** for each card
+- 🕒 **Card History** (automatically saves your last 10 cards)
+- 🔀 **Random topic generator** & Trending chips
+- 📸 **Save card as image (PNG)** with pixel-perfect export dimensions
+- 📋 **Copy Image & Copy Text** directly to clipboard
 - 🔗 **Share card on social platforms**
-- 🤖 **Groq LLaMA-3.1 8B Instant** (fast & free)
+- 🎉 **Confetti animations & Sound effects**
+- 🤖 **Groq API (openai/gpt-oss-20b)** (fast & free)
 - 🧠 Smart JSON-based generation for:
   - Title  
   - Emoji  
   - Short body text  
   - Hashtags
+  - Color theme
 - 📱 **Screenshot-ready cards** (social media friendly)
 ---
 
@@ -31,8 +42,12 @@ A playful, cherry-themed React + Vite web app powered by **Groq LLaMA-3.1** that
 ## Tech Stack
 - **React 18**
 - **Vite**
-- **Groq API (LLaMA-3.1 8B Instant)**
+- **Groq API (openai/gpt-oss-20b)**
 - **Axios**
+- **Framer Motion** (animations)
+- **Vanta.js & Three.js** (background)
+- **html2canvas** (image export)
+- **canvas-confetti**
 - **Custom modern CSS** (no UI frameworks)
 
 ---
@@ -63,24 +78,28 @@ Create a free key here:
 https://console.groq.com/keys
 
 ### 4️⃣ Run the app
+
+npm install
+
 npm run dev
 
 
 Your app will open at your local host.
 
 ## How It Works
-The app sends your topic to Groq's LLaMA-3.1 8B Instant model using a clean structured prompt.
+The app sends your topic and selected tone to Groq's API using a clean structured prompt.
 The model returns a JSON object like:
 
 {
   "title": "Coffee Chaos",
   "emoji": "☕",
   "body": "When your brain says focus, but your coffee says nope.",
-  "hashtags": ["coffee", "relatable"]
+  "hashtags": ["coffee", "relatable"],
+  "color": "#6f4e37"
 }
 
 
-The UI turns it into a polished social card with emojis + hashtags.
+The UI turns it into a polished, animated social card with emojis, hashtags, and a matching color theme.
 
 ## 🌍 Deployment
 
