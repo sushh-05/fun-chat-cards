@@ -234,6 +234,81 @@ body {
     width: 35vw;
     height: 25vh;
   }
+
+  /* Header */
+  .header-buttons {
+    position: static;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  /* Generator Controls */
+  .controls {
+    flex-wrap: wrap;
+    border-radius: 24px;
+    padding: 8px;
+  }
+
+  .tone-selector {
+    order: 3;
+    flex: 1 1 100%;
+  }
+
+  input {
+    order: 1;
+    flex: 1 1 0%;
+    min-width: 120px;
+  }
+
+  button {
+    order: 2;
+    flex: 0 0 auto;
+  }
+
+  /* Customization Bar */
+  .customization-bar {
+    gap: 8px;
+  }
+
+  .tone-selector.small {
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .handle-input {
+    flex: 1 1 100%;
+  }
+
+  /* Card Canvas */
+  .card-canvas {
+    padding: 20px 16px;
+  }
+
+  /* Card Formats */
+  .card.aspect-square,
+  .card.aspect-portrait,
+  .card.aspect-landscape {
+    padding: 24px;
+  }
+
+  .card.aspect-square .card-title,
+  .card.aspect-portrait .card-title,
+  .card.aspect-landscape .card-title {
+    font-size: 20px;
+  }
+
+  .card.aspect-square .card-text,
+  .card.aspect-portrait .card-text,
+  .card.aspect-landscape .card-text {
+    font-size: 15px;
+  }
+
+  .card.aspect-landscape .card-body {
+    max-width: 100%;
+  }
 }
 
 .app-wrapper {
@@ -241,7 +316,8 @@ body {
   width: 100%;
   position: relative;
   z-index: 20;
-  padding: 32px;
+  padding: 32px 16px;
+  box-sizing: border-box;
 }
 
 /* ========== Layout ========== */
@@ -267,6 +343,31 @@ header {
   top: 0;
   display: flex;
   gap: 10px;
+}
+
+@media (max-width: 600px) {
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    order: 1;
+  }
+
+  .subtitle {
+    order: 2;
+  }
+
+  .header-buttons {
+    position: static;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 2px;
+    order: 3;
+  }
 }
 
 /* heading */

@@ -275,11 +275,11 @@ export default function App() {
         <div className="container">
           <header>
             <div className="header-buttons">
-              <button className="icon-btn" onClick={handleRandom} title="Random topic">
-                🔀
+              <button className="icon-btn" onClick={handleRandom} title="Surprise me" aria-label="Surprise me">
+                🎲
               </button>
-              <button className="icon-btn" onClick={toggleTheme} title="Toggle theme">
-                {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
+              <button className="icon-btn" onClick={toggleTheme} title="Toggle theme" aria-label="Toggle theme">
+                {theme === "dark" ? "🌙 Dark" : "☀️Light "}
               </button>
             </div>
 
@@ -299,7 +299,7 @@ export default function App() {
               <input
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="Type a topic (or click 🔀)"
+                placeholder="Type a topic (or click 🎲)"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") generateCard();
                 }}
