@@ -247,27 +247,6 @@ body {
   }
 
   /* Generator Controls */
-  .controls {
-    flex-wrap: wrap;
-    border-radius: 24px;
-    padding: 8px;
-  }
-
-  .tone-selector {
-    order: 3;
-    flex: 1 1 100%;
-  }
-
-  input {
-    order: 1;
-    flex: 1 1 0%;
-    min-width: 120px;
-  }
-
-  button {
-    order: 2;
-    flex: 0 0 auto;
-  }
 
   /* Customization Bar */
   .customization-bar {
@@ -367,6 +346,39 @@ header {
     gap: 8px;
     margin-top: 2px;
     order: 3;
+  }
+
+  /* Generator Controls — must be after base display:flex rule */
+  .controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "topic generate"
+      "tone  tone";
+    gap: 8px;
+    border-radius: 24px;
+    padding: 10px;
+    box-sizing: border-box;
+    height: auto;
+  }
+
+  .controls input {
+    grid-area: topic;
+    min-width: 0;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .controls button:not(.icon-btn) {
+    grid-area: generate;
+    width: auto;
+  }
+
+  .controls .tone-selector {
+    grid-area: tone;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 }
 
@@ -1021,4 +1033,39 @@ details[open] .history-summary::before {
   color: var(--text-dark);
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+}
+
+/* Mobile controls grid — placed last to override base display:flex */
+@media (max-width: 600px) {
+  .controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "topic generate"
+      "tone  tone";
+    gap: 8px;
+    border-radius: 24px;
+    padding: 10px;
+    box-sizing: border-box;
+    height: auto;
+  }
+
+  .controls input {
+    grid-area: topic;
+    min-width: 0;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .controls button:not(.icon-btn) {
+    grid-area: generate;
+    width: auto;
+  }
+
+  .controls .tone-selector {
+    grid-area: tone;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
 }
