@@ -2,5 +2,10 @@ node_modules/
 dist/
 .env
 .env.local
+.env.*
+!.env.example
 .DS_Store
 .vscode/
+.vercel
+.env*
+!.env.example

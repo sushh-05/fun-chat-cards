@@ -1,12 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import Card from "./components/Card";
 import { randomTopic } from "./utils/randomTopics";
 import html2canvas from "html2canvas";
 import { Toaster, toast } from "react-hot-toast";
 import confetti from "canvas-confetti";
-
-const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 
 export default function App() {
   const [topic, setTopic] = useState("");
@@ -79,23 +76,6 @@ export default function App() {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
   const handleRandom = () => setTopic(randomTopic());
 
-  const safeParseJson = (text) => {
-    try {
-      return JSON.parse(text);
-    } catch {
-      const first = text.indexOf("{"),
-        last = text.lastIndexOf("}");
-      if (first !== -1 && last !== -1 && last > first) {
-        try {
-          return JSON.parse(text.slice(first, last + 1));
-        } catch {
-          return null;
-        }
-      }
-      return null;
-    }
-  };
-
   const playSound = (type) => {
     try {
       const audio = new Audio(
@@ -112,54 +92,43 @@ export default function App() {
 
   const generateCard = async () => {
     const trimmed = topic.trim();
-    if (!trimmed) return;
+
+    if (!trimmed) {
+      toast.error("Please enter a topic first.");
+      return;
+    }
+
+    if (trimmed.length > 150) {
+      toast.error("Topic must be 150 characters or less.");
+      return;
+    }
+
     setLoading(true);
     setCard(null);
 
     try {
-      const system = `You are a ${tone.toLowerCase()} short social-card generator. Output only valid JSON with keys: title, emoji, body, hashtags (array), color (a hex color code matching the vibe). Keep title <=5 words, body <= 40 words total. Output JSON only, nothing else.`;
-      const payload = {
-        model: "openai/gpt-oss-20b",
-        messages: [{ role: "system", content: system }, { role: "user", content: `Topic: ${trimmed}\nProduce one JSON object only.` }],
-        max_tokens: 1024,
-        temperature: 0.82
-      };
-
-      const res = await axios.post(GROQ_ENDPOINT, payload, {
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${import.meta.env.VITE_GROQ_API_KEY}` }
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic: trimmed, tone })
       });
 
-      const raw = res.data?.choices?.[0]?.message?.content ?? "";
-      const parsed = safeParseJson(raw);
-
-      if (parsed && parsed.title && parsed.body) {
-        const newCard = {
-          title: String(parsed.title).trim(),
-          emoji: parsed.emoji ? String(parsed.emoji).trim() : "",
-          body: String(parsed.body).trim(),
-          hashtags: Array.isArray(parsed.hashtags) ? parsed.hashtags.map(String) : [],
-          color: parsed.color ? String(parsed.color).trim() : ""
-        };
-        setCard(newCard);
-        setHistory((prev) => [newCard, ...prev].slice(0, 10)); // Keep last 10
-        playSound("pop");
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-      } else {
-        // fallback: show raw text in card body
-        const fallbackCard = {
-          title: trimmed.length <= 30 ? trimmed : "Fun Card",
-          emoji: "",
-          body: raw.replace(/\n{2,}/g, "\n").trim() || "Couldn't parse response.",
-          hashtags: [],
-          color: ""
-        };
-        setCard(fallbackCard);
-        setHistory((prev) => [fallbackCard, ...prev].slice(0, 10));
-        playSound("pop");
+      if (!res.ok) {
+        if (res.status === 429) throw new Error("Rate limit exceeded. Please try again later.");
+        if (res.status === 400) throw new Error("Invalid input. Please check your topic.");
+        throw new Error("Server error. Please try again.");
       }
+
+      const data = await res.json();
+      const newCard = data.result; // Guaranteed to be validated by Zod on the backend
+
+      setCard(newCard);
+      setHistory((prev) => [newCard, ...prev].slice(0, 10)); // Keep last 10
+      playSound("pop");
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
     } catch (err) {
       console.error(err);
-      toast.error("Generation failed — see console for details.");
+      toast.error(err.message || "Generation failed — see console for details.");
     } finally {
       setLoading(false);
     }
@@ -304,9 +273,13 @@ export default function App() {
                   if (e.key === "Enter") generateCard();
                 }}
               />
-              <button onClick={generateCard} disabled={loading || !topic.trim()}>
+              <button onClick={generateCard} disabled={loading}>
                 {loading ? "Generating..." : "Generate"}
               </button>
+            </div>
+
+            <div className={`char-counter ${topic.length > 150 ? 'error' : ''}`}>
+              {topic.length} / 150
             </div>
 
             <div className="trending-chips">
