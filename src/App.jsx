@@ -134,32 +134,39 @@ export default function App() {
     }
   };
 
-  // Part 5: export pixel dimensions per format
-  const EXPORT_SIZES = {
-    auto: { width: 1080, height: null },
-    square: { width: 1080, height: 1080 },
-    portrait: { width: 1080, height: 1350 },
-    landscape: { width: 1920, height: 1080 },
-  };
-
   const saveAsImage = async () => {
     if (!cardRef.current) return;
+
+    // Temporarily remove any transforms that might shift the capture
+    const originalTransform = cardRef.current.style.transform;
+    cardRef.current.style.transform = 'none';
+
     try {
-      const { width, height } = EXPORT_SIZES[aspectRatio] || EXPORT_SIZES.auto;
-      const opts = { backgroundColor: null, scale: 2 };
-      if (width) opts.width = width / 2;
-      if (height) opts.height = height / 2;
+      const opts = {
+        backgroundColor: null,
+        scale: 2, // High resolution capture
+        useCORS: true,
+        // Explicitly use the actual DOM dimensions to prevent cropping or extra space
+        width: cardRef.current.offsetWidth,
+        height: cardRef.current.offsetHeight
+      };
+
       const canvas = await html2canvas(cardRef.current, opts);
       const data = canvas.toDataURL("image/png");
+
       const a = document.createElement("a");
       a.href = data;
       a.download = `${(card?.title || "fun-card").replace(/\s+/g, "-")}.png`;
       a.click();
+
       toast.success("Image saved!");
       playSound("success");
     } catch (err) {
       console.error("save error", err);
       toast.error("Could not save image.");
+    } finally {
+      // Always restore the original styles
+      cardRef.current.style.transform = originalTransform;
     }
   };
 
